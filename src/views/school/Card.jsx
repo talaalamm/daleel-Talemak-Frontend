@@ -17,7 +17,7 @@ const Card = () => {
   useEffect(() => {
     // جلب قائمة المحافظات
     axios
-      .get("http://localhost:5027/api/GetGovernarate")
+      .get("https://react-server-k3id.onrender.com/api/GetGovernarate")
       .then((response) => {
         const governoratesData = response.data.map((governorate) => ({
           value: governorate._id,
@@ -35,7 +35,7 @@ const Card = () => {
     if (selectedGovernorate) {
       setLoadingRegions(true);
       axios
-        .get(`http://localhost:5027/api/Regions/GetRegions/?id=${selectedGovernorate}`)
+        .get(`https://react-server-k3id.onrender.com/api/Regions/GetRegions/?id=${selectedGovernorate}`)
         .then((response) => {
           const regionsData = response.data.map((region) => ({
             value: region._id,
@@ -63,7 +63,7 @@ const Card = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5027/api/schools", formData);
+      await axios.post("https://react-server-k3id.onrender.com/api/schools", formData);
       setAlert({ message: "تم إضافة المدرسة بنجاح!", type: "success" });
       setFormData({ schoolName: "", regionName: "", governorateName: "" });
 

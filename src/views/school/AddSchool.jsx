@@ -21,7 +21,7 @@ const AddSchool = () => {
   useEffect(() => {
     if (selectedProvince) { // التحقق من اختيار المحافظة.
       axios
-        .get(`https://react-server-k3id.onrender.com//api/Regions/GetRegions/${selectedProvince}`) // إرسال طلب للحصول على المناطق المرتبطة بالمحافظة.
+        .get(`https://localhost:5001/api/Regions/GetRegions/${selectedProvince}`) // إرسال طلب للحصول على المناطق المرتبطة بالمحافظة.
         .then((response) => { // عند نجاح الطلب:
           const regionsData = response.data.map((region) => ({ // تحويل البيانات إلى صيغة يمكن استخدامها.
             value: region.regionId, // تخزين معرّف المنطقة.
@@ -113,13 +113,21 @@ const AddSchool = () => {
             />
           </div>
        
-          <ListGovernorates
+          {/* <ListGovernorates
                 name="governorateName"
                 id={governorateName}
                 value={selectedProvince} // المحافظة المختارة حاليًا.
                 onSelect={(province) => {
                   setSelectedProvince(province); // تحديث المحافظة عند اختيارها.
                 }}
+              /> */}
+                  <ListGovernorates
+                name="المحافظة"
+                value={selectedProvince} // المحافظة المختارة حاليًا.
+                onSelect={(province) => {
+                  setSelectedProvince(province); // تحديث المحافظة عند اختيارها.
+                }}
+                top={true}
               />
         {selectedProvince && (
                 <ProvinceDropdown
