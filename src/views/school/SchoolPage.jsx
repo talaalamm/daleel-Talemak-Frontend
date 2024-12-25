@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";  // تأكد من أنك استوردت axios
-import schoolImage from "../../assets/Logo.jpeg";
 import location from "../../assets/download.jpeg";
+import Logo from '../../images/logo.png';
 
 // مكون صفحة المدرسة
 const SchoolPage = () => {
@@ -119,7 +119,7 @@ const SchoolPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 mb-6">
             <div className="mb-6 md:col-span-1">
               <img
-                src={schoolImage}
+                src={Logo}
                 alt="School"
                 className="w-full h-72 object-cover rounded-lg"
               />
