@@ -1,216 +1,298 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";  // تأكد من أنك استوردت axios
+import axios from "axios";
 import location from "../../assets/download.jpeg";
-import Logo from '../../images/logo.png';
+import Logo from "../../images/school3.jpg";
 
 // مكون صفحة المدرسة
 const SchoolPage = () => {
-  const [school, setSchool] = useState(null); // لحفظ بيانات المدرسة
-  const [comments, setComments] = useState([]); // لحفظ التعليقات
-  const [ratings, setRatings] = useState([]); // لحفظ التقييمات
-  const { id } = useParams(); // للحصول على ID المدرسة من الرابط
-  const [newComment, setNewComment] = useState(""); // لحفظ التعليق الجديد
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // للتحكم في نافذة إضافة تعليق
-  const [isRatingPopupOpen, setIsRatingPopupOpen] = useState(false); // للتحكم في نافذة إضافة تقييم
-  const [newRating, setNewRating] = useState(0); // لحفظ التقييم الجديد
-
-  // دالة لجلب بيانات المدرسة، التعليقات، والتقييمات
+  const [school, setSchool] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [ratings, setRatings] = useState([]);
+  const { id } = useParams();
+  const [newComment, setNewComment] = useState("");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isRatingPopupOpen, setIsRatingPopupOpen] = useState(false);
+  const [newRating, setNewRating] = useState(0);
+const [governorates, setGovernorates] = useState([]);
   useEffect(() => {
     const fetchSchoolData = async () => {
       try {
-        const schoolResponse = await axios.get(`https://react-server-k3id.onrender.com/api/schools/${id}`);
+        const schoolResponse = await axios.get(
+          `http://localhost:5027/api/Schools/GetSchool/${id}`
+        );
         setSchool(schoolResponse.data);
       } catch (error) {
         console.error("Error fetching school data:", error);
       }
     };
-  
+   const fetchGovernorates = async () => {
+     try {
+       const response = await axios.get(
+         "http://localhost:5027/api/Governorate/GetGovernarate"
+       );
+       const governoratesData = response.data.map((governorate) => ({
+         id: governorate.governorateId,
+         name: governorate.governorateName,
+       }));
+       setGovernorates(governoratesData);
+     } catch (error) {
+       console.error("Error fetching governorates:", error);
+     }
+   }
     const fetchCommentsAndRatings = async () => {
       try {
-        const commentsResponse = await axios.get(`https://react-server-k3id.onrender.com/api/comments?school_id=${id}`);
+        const commentsResponse = await axios.get(
+          `http://localhost:5027/api/SchoolComments/GetSchoolComment/${id}`
+        );
         setComments(commentsResponse.data);
-  
-        const ratingsResponse = await axios.get(`https://react-server-k3id.onrender.com/api/evaluations?school_id=${id}`);
+
+        const ratingsResponse = await axios.get(
+          `http://localhost:5027/api/StarRating/AverageRating/${id}`
+        );
         setRatings(ratingsResponse.data);
       } catch (error) {
         console.error("Error fetching comments and ratings:", error);
       }
     };
-  
+
     fetchSchoolData();
     fetchCommentsAndRatings();
-  }, [id]); // التحديث عند تغيير ID المدرسة
-  
-  // دالة لحذف تعليق
-  const handleDeleteComment = async (commentId) => {
-    try {
-      const response = await axios.delete(`https://react-server-k3id.onrender.com/api/comments/${commentId}`);
-      if (response.status === 200) {
-        setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
-      } else {
-        console.error("Failed to delete comment.");
-      }
-    } catch (error) {
-      console.error("Error deleting comment:", error);
-    }
-  };
+  }, [id, comments]);
 
-  // دالة لإرسال التقييم
   const handleRatingSubmit = async () => {
     if (newRating === 0) return;
     try {
-      const response = await axios.post("https://react-server-k3id.onrender.com/api/evaluations", {
-        school_id: id,
-        score: newRating,
-      });
+      const response = await axios.post(
+        "http://localhost:5027/api/StarRating/addRating",
+        {
+          schoolId: id,
+          rating: newRating,
+        }
+      );
+      setIsPopupOpen(false); // إغلاق نافذة إضافة التعليق
 
       if (response.status === 200) {
-        alert("Evaluation submitted successfully!");
+        alert("تم إرسال التقييم بنجاح!");
         setIsRatingPopupOpen(false);
-        const ratingsResponse = await axios.get(`https://react-server-k3id.onrender.com/api/evaluations?school_id=${id}`);
+        const ratingsResponse = await axios.get(
+          `http://localhost:5027/api/StarRating/AverageRating/${id}`
+        );
         setRatings(ratingsResponse.data);
       } else {
-        console.error("Failed to submit evaluation.");
+        console.error("فشل في إرسال التقييم.");
       }
     } catch (error) {
-      console.error("Error submitting evaluation:", error);
+      console.error("خطأ في إرسال التقييم:", error);
     }
   };
 
-  // دالة لإضافة تعليق جديد
   const handleAddComment = async () => {
     if (!newComment) return;
     try {
-      const response = await axios.post("https://react-server-k3id.onrender.com/api/comments", {
-        school_id: id,
-        content: newComment,
-      });
-  
+      const response = await axios.post(
+        `http://localhost:5027/api/SchoolComments/CreateSchoolComment/${id}`,
+        {
+          commentBody: newComment,
+          schoolId: id,
+        }
+      );
+      setIsPopupOpen(false);
+
       if (response.status === 200) {
-        setComments(prevComments => [...prevComments, response.data]);
-        setNewComment("");
+        setComments((prevComments) => [...prevComments, response.data]);
+        setNewComment(""); // مسح التعليق بعد إضافته
         setIsPopupOpen(false);
       } else {
-        console.error("Failed to add comment.");
+        console.error("فشل في إضافة التعليق.");
       }
     } catch (error) {
-      console.error("Error adding comment:", error);
+      console.error("خطأ في إضافة التعليق:", error);
     }
   };
-  
-  // دالة لحساب متوسط التقييمات
-  const calculateAverageRating = (ratings) => {
-    if (ratings.length === 0) return 0;
-    const total = ratings.reduce((acc, rating) => acc + rating.score, 0);
-    return (total / ratings.length).toFixed(1);
-  };
-
+  useEffect(() => {
+    if (isPopupOpen === false) {
+      setIsPopupOpen(false); // إغلاق نافذة إضافة التعليق
+    } else {
+      setIsPopupOpen(true); // إغلاق نافذة إضافة التعليق
+    }
+  }, [isPopupOpen]);
   if (!school) {
-    return <div className="text-center text-red-500">لم يتم العثور على المدرسة المطلوبة.</div>;
+    return (
+      <div className="text-center text-red-500">
+        لم يتم العثور على المدرسة المطلوبة.
+      </div>
+    );
   }
-
-  const averageRating = calculateAverageRating(ratings);
 
   return (
     <div className="relative w-full overflow-x-hidden">
-      <div className="bg-white mt-16 mx-8">
-        <div className="mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 mb-6">
-            <div className="mb-6 md:col-span-1">
-              <img
-                src={Logo}
-                alt="School"
-                className="w-full h-72 object-cover rounded-lg"
-              />
-            </div>
+      <div className="bg-white mt-16 mx-8 p-6 rounded-lg shadow-lg">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="mb-6 md:col-span-1">
+            <img
+              src={Logo}
+              alt="School"
+              className="w-full h-72 object-cover rounded-lg"
+            />
+          </div>
 
-            <div className="md:col-span-1">
-              <h1 className="text-3xl mx-4 font-semibold text-center border-2 border-customGreen2 rounded-2xl p-2 text-blue-700 mb-4">
-                {school.schoolName}
+          <div className="md:col-span-1">
+            <h1 className="text-3xl font-semibold text-center text-blue-700 border-2 border-customGreen2 rounded-2xl p-4 mb-4">
+              {school.schoolName}
+            </h1>
+            <div className="flex items-center mb-4">
+              <img src={location} alt="Location" className="w-12 h-12 mx-2" />
+              <h1 className="text-lg text-blue font-bold">
+                {school.region.governorate.governorateName}/  {school.region.regionName}
               </h1>
-              <div className="flex">
-                <div className="flex items-end">
-                  <img src={location} alt="Location" className="w-12 h-15 mx-2" />
-                  <h1 className="text-lg text-blue-700 font-bold shadow-md">الأردن / عمان</h1>
-                </div>
-                <div>
-                  <p className="text-lg text-gray-700 text-center mb-20" style={{ marginRight: "2rem" }}>
-                    {school.address || "لا توجد معلومات عن العنوان"}
-                  </p>
-                </div>
-              </div>
             </div>
-          </div>
-
-          <div className="mt-3 flex items-center">
-            <div className=" text-navbar">
-              <div className="flex justify-between my-2 w-80">
-                <span className="text-navbar">التقييم:</span>
-                <button
-                  onClick={() => setIsRatingPopupOpen(true)}
-                  className="px-4 py-1 bg-customGreen2 text-white rounded-lg ml-4"
+            <div>
+              {/* <h3 className="flex">
+                التقييم: {ratings.averageRating}{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="text-accent h-5 w-5 mr-10 "
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
                 >
-                  إضافة تقييم
-                </button>
-              </div>
-              <div className="flex items-center">
-                {Array.from({ length: 5 }, (_, index) => (
-                  <svg
-                    key={index}
-                    onClick={() => setNewRating(index + 1)}
-                    className={`w-6 h-6 cursor-pointer ${index < newRating ? "fill-current text-accent" : "text-gray-300"}`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.99a1 1 0 00.95.69h4.181c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.286 3.99c.3.921-.755 1.688-1.54 1.118l-3.388-2.462a1 1 0 00-1.176 0l-3.388 2.462c-.784.57-1.838-.197-1.54-1.118l1.286-3.99a1 1 0 00-.364-1.118L2.05 9.417c-.783-.57-.38-1.81.588-1.81h4.181a1 1 0 00.95-.69l1.286-3.99z" />
-                  </svg>
-                ))}
-                <span className="ml-2 text-sm text-customGreen">{newRating}/5</span>
-              </div>
+                  <path d="M9.049 2.927a1 1 0 011.902 0l1.502 4.636a1 1 0 00.95.69h4.908a1 1 0 01.592 1.806l-3.974 2.883a1 1 0 00-.363 1.118l1.502 4.636a1 1 0 01-1.54 1.118l-3.974-2.883a1 1 0 00-1.176 0l-3.974 2.883a1 1 0 01-1.54-1.118l1.502-4.636a1 1 0 00-.363-1.118L2.049 9.059a1 1 0 01.592-1.806h4.908a1 1 0 00.95-.69l1.502-4.636z" />
+                </svg>
+              </h3> */}
+              <h3
+  className="flex items-center justify-center"
+  style={{
+    marginLeft: '40rem', // تحريك العنصر لليمين
+    marginTop: '2rem', // تحريك العنصر للأسفل
+    position: 'relative', // إذا كنت بحاجة لتحديد موضعه بشكل نسبي
+  }}
+>
+  <span className="font-semibold text-lg text-blue">التقييم:</span>
+  <span className="ml-4 flex items-center">
+    {/* {ratings.averageRating}/5 */}
+    <div className="ml-2 flex">
+      {[...Array(5)].map((_, index) => (
+        <svg
+          key={index}
+          xmlns="http://www.w3.org/2000/svg"
+          className={`h-5 w-5 ${index < ratings.averageRating ? 'text-yellow' : 'text-gray'}`}
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path d="M9.049 2.927a1 1 0 011.902 0l1.502 4.636a1 1 0 00.95.69h4.908a1 1 0 01.592 1.806l-3.974 2.883a1 1 0 00-.363 1.118l1.502 4.636a1 1 0 01-1.54 1.118l-3.974-2.883a1 1 0 00-1.176 0l-3.974 2.883a1 1 0 01-1.54-1.118l1.502-4.636a1 1 0 00-.363-1.118L2.049 9.059a1 1 0 01.592-1.806h4.908a1 1 0 00.95-.69l1.502-4.636z" />
+        </svg>
+      ))}
+    </div>
+  </span>
+</h3>
             </div>
-          </div>
 
-          <div className="mb-6">
-            <h2 className="text-2xl font-semibold text-customGreen2 mb-4">التعليقات:</h2>
-            <ul className="space-y-4">
-              {comments.map((comment) => (
-                <li key={comment._id} className="p-4 relative bg-gray-100 rounded-lg bg-body max-w-sm shadow-sm">
-                  {comment.content}
-                  <span
-                    className="text-customRed absolute top-2 left-2 text-left cursor-pointer"
-                    onClick={() => handleDeleteComment(comment._id)}
-                  >
-                    حذف
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="text-center">
-            <button
-              className="px-6 py-2 bg-blue-800 text-lg text-white rounded-lg bg-customGreen2"
-              onClick={() => setIsPopupOpen(true)}
-            >
-              إضافة تعليق
-            </button>
           </div>
         </div>
-      </div>
+
+        <div className="mb-6 ">
+          <h2 className="text-2xl font-semibold text-customGreen2 mb-4">
+            التقييمات:
+          </h2>
+          <div className="flex items-center mb-4">
+            {Array.from({ length: 5 }, (_, index) => (
+              <svg
+                key={index}
+                onClick={() => setNewRating(index + 1)}
+                className={`w-8 h-8 cursor-pointer ${
+                  index < newRating
+                    ? "fill-current text-accent"
+                    : "text-gray-300"
+                }`}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.99a1 1 0 00.95.69h4.181c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.286 3.99c.3.921-.755 1.688-1.54 1.118l-3.388-2.462a1 1 0 00-1.176 0l-3.388 2.462c-.784.57-1.838-.197-1.54-1.118l1.286-3.99a1 1 0 00-.364-1.118L2.05 9.417c-.783-.57-.38-1.81.588-1.81h4.181a1 1 0 00.95-.69l1.286-3.99z" />
+              </svg>
+            ))}
+            <span className="ml-2 text-lg text-customGreen">{newRating}/5</span>
+          </div>
+          <button
+            onClick={() => setIsRatingPopupOpen(true)}
+            className="px-4 py-2 bg-customGreen2 text-white rounded-lg"
+          >
+            إضافة تقييم
+          </button>
+        </div>
+
+        {/* <div className="mb-6">
+          <h2 className="text-xl text-navy3 font-semibold text-blue-700 mb-2 border-2 border-customGreen2 p-2">
+اراء اولياء الأمور          </h2>
+          <ul className="space-y-4">
+            {comments.length > 0 ? (
+              comments.map((comment, index) => (
+                <li
+                  key={index}
+                  className="p-4 mb-4 text-navy1 flex border border-customGreen2 rounded-lg bg-white justify-between"
+                >
+                  {comment}
+                </li>
+              ))
+            ) : (
+              <li className="text-gray">لا توجد تعليقات بعد.</li>
+            )}
+          </ul>
+          <button
+            onClick={() => setIsPopupOpen(true)}
+            className="px-4 py-2 mt-4 bg-customLime text-white rounded-lg"
+          >
+            إضافة تعليق
+          </button>
+        </div>
+      </div> */}
+   <div className="mb-6">
+  <h2 className="text-xl text-navy3 font-semibold text-blue-700 mb-2 border-2 border-customGreen2 p-2 text-center">
+    آراء أولياء الأمور
+  </h2>
+  <ul className="space-y-4">
+    {comments.length > 0 ? (
+      comments.map((comment, index) => (
+        <li
+          key={index}
+          className="p-4 mb-4 text-navy1 flex border border-customGreen2 rounded-lg bg-white justify-between"
+        >
+          <div className="flex items-center w-full">
+            <span className="ml-4 text-xl text-navy1 flex-grow text-center">{comment}</span> {/* تعديل هنا */}
+          </div>
+        </li>
+      ))
+    ) : (
+      <li className="text-gray">لا توجد تعليقات بعد.</li>
+    )}
+  </ul>
+  <button
+    onClick={() => setIsPopupOpen(true)}
+    className="px-4 py-2 mt-4 bg-customGreen2 text-white rounded-lg"
+  >
+    إضافة تعليق
+  </button>
+</div>
+
+</div>
 
       {/* نافذة التقييم */}
       {isRatingPopupOpen && (
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-10">
-          <div className="bg-white p-6 rounded-lg w-1/3">
-            <h2 className="text-lg text-customGreen2 font-semibold mb-4">قيم هذه المدرسة</h2>
+        <div className="fixed inset-0 bg-gray  bg-opacity-50 flex items-center justify-center z-10">
+          <div className="bg-white p-6 rounded-lg w-1/3 shadow-lg " >
+            <h2 className="text-lg text-customGreen2 font-semibold ">
+              قيم هذه المدرسة
+            </h2>
             <div className="flex justify-center mb-4">
               {Array.from({ length: 5 }, (_, index) => (
                 <svg
                   key={index}
                   onClick={() => setNewRating(index + 1)}
-                  className={`w-6 h-6 cursor-pointer ${index < newRating ? "fill-current text-accent" : "text-gray-300"}`}
+                  className={`w-8 h-8 cursor-pointer ${
+                    index < newRating
+                      ? "fill-current text-accent"
+                      : "text-gray-300"
+                  }`}
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
@@ -219,20 +301,21 @@ const SchoolPage = () => {
                 </svg>
               ))}
             </div>
-            <div className="mt-4 flex justify-between">
-              <button
-                className="px-6 py-2 bg-customGreen2 text-white rounded-lg"
-                onClick={handleRatingSubmit}
-              >
-                حفظ التقييم
-              </button>
-              <button
-                className="px-6 py-2 bg-customRed text-white rounded-lg"
-                onClick={() => setIsRatingPopupOpen(false)}
-              >
-                إغلاق
-              </button>
-            </div>
+            <button
+              onClick={handleRatingSubmit}
+              className="px-4 py-2 bg-customGreen text-white rounded-lg top:10px"
+              style={{ margintop: "100px" }}
+            >
+              إرسال التقييم
+
+            </button>
+            <button
+              onClick={() => setIsRatingPopupOpen(false)}
+              style={{ marginRight: 400  }}
+              className="text-gray bg-customRed mt-4 px-4 py-2 rounded-lg  "
+            >
+              إغلاق
+            </button>
           </div>
         </div>
       )}
@@ -240,24 +323,25 @@ const SchoolPage = () => {
       {/* نافذة التعليق */}
       {isPopupOpen && (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-10">
-          <div className="bg-white p-6 rounded-lg w-1/3">
-            <h2 className="text-lg text-customGreen2 font-semibold mb-4">أضف تعليقك</h2>
+          <div className="bg-white p-6 rounded-lg w-1/3 shadow-lg">
+            <h2 className="text-lg text-customGreen2 font-semibold mb-4">
+              أضف تعليقك
+            </h2>
             <textarea
-              className="w-full p-3 border border-customGreen2 rounded-lg"
-              rows="4"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              placeholder="أضف تعليقك هنا..."
+              className="w-full h-32 p-4 border rounded-lg mb-4"
+              placeholder="أكتب تعليقك هنا..."
             />
-            <div className="mt-4 flex justify-between">
+            <div className="flex justify-between">
               <button
-                className="px-6 py-2 bg-customGreen2 text-white rounded-lg"
+                className="px-4 py-2 bg-customGreen text-white rounded-lg"
                 onClick={handleAddComment}
               >
-                إضافة
+                إضافة تعليق
               </button>
               <button
-                className="px-6 py-2 bg-customRed text-white rounded-lg"
+                className="px-4 py-2 bg-primaryButton text-white rounded-lg"
                 onClick={() => setIsPopupOpen(false)}
               >
                 إغلاق

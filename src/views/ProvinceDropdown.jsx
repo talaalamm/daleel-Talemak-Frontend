@@ -3,11 +3,12 @@ import { useState, useEffect, useRef } from "react"; // استيراد useState 
 function ProvinceDropdown({ options, name, top, value, onSelect }) {
   const [isOpen, setIsOpen] = useState(false); // حالة لتحديد ما إذا كانت القائمة مفتوحة.
   const dropdownRef = useRef(null); // إنشاء مرجع للمكون لإغلاق القائمة عند النقر خارجها.
-  const [selname, setSelname] = useState(""); // لتخزين اسم المنطقة المختارة.
+  const [selname, setSelname] = useState(value || ""); // لتخزين اسم المنطقة المختارة.
 
   const toggleDropdown = () => setIsOpen(!isOpen); // تغيير حالة القائمة بين الفتح والإغلاق.
 
   const handleSelect = (option) => {
+    setSelname(option.label); // تحديث اسم المنطقة المختارة.
     onSelect(option); // استدعاء دالة onSelect من المكون الأب مع قيمة المنطقة المختارة.
     setIsOpen(false); // إغلاق القائمة بعد اختيار المنطقة.
   };
@@ -24,12 +25,11 @@ function ProvinceDropdown({ options, name, top, value, onSelect }) {
     return () => {
       // إزالة المستمع عند تفكيك المكون.
       document.removeEventListener("click", handleClickOutside);
-      
     };
   }, []); // التأثير يتم فقط عند تحميل المكون.
 
   return (
-    <div className="relative w-64 mx-auto"> {/*  القائمة */}
+    <div ref={dropdownRef} className="relative w-64 mx-auto"> {/* حاوية القائمة */}
       {/* زر فتح/غلق القائمة */}
       <button
         className="w-full p-3 bg-white text-blue-950 rounded-lg shadow-lg flex justify-between items-center"
@@ -53,21 +53,18 @@ function ProvinceDropdown({ options, name, top, value, onSelect }) {
       </button>
 
       {/* قائمة الخيارات */}
-      {isOpen && options && options.length > 0 ? (
-      <ul className={`absolute left-0 w-full  ${top === true ? " bottom-[100%]" : ""} mt-2 bg-white  z-10 shadow-lg rounded-lg border border-gray-200`}>
+      {isOpen && (
+        <ul className={`absolute left-0 w-full ${top === true ? "bottom-[100%]" : ""} mt-2 bg-white  z-10 shadow-lg rounded-lg border border-gray-200`}>
           {options.map((option) => (
             <li
               key={option.value} // تعيين قيمة المفتاح لكل عنصر في القائمة.
-              className="p-3 hover:bg-blue-500 text-customRed max-h-44 overflow-y-auto hover:text-customGreen2 cursor-pointer" // نمط العنصر.
-              onClick={() => handleSelect(option.value) & setSelname(option.label)} // عند النقر على الخيار، يتم تحديده.
+              className="p-3 hover:bg-blue-500 hover:text-customGreen2 cursor-pointer"
+              onClick={() => handleSelect(option.label)} // عند النقر على الخيار، يتم تحديده.
             >
               {option.label} {/* عرض اسم المنطقة. */}
             </li>
           ))}
         </ul>
-      ) : (
-        // في حال كانت القائمة مفتوحة ولكن لا توجد خيارات.
-        isOpen && <p className="absolute left-0 w-full mt-2 bg-white z-10 text-center text-gray-500 p-3">لا توجد مناطق للاختيار</p>
       )}
     </div>
   );

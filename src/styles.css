@@ -28,3 +28,7 @@
   /* background-color: #fff; */
   padding-left: 20px;
 }
+@font-face {
+  font-family:Lateef;
+  src: url("/public/fonts/Lateef/Lateef-Medium.ttf");
+}

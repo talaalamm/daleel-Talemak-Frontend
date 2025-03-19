@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Logo from "./images/logo.png";
 import { Link } from "react-router-dom";
-function Navbar({ schools }) {
+function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const handleSidebarToggle = () => setIsSidebarOpen((prev) => !prev);
@@ -18,17 +18,16 @@ function Navbar({ schools }) {
   }, []);
   const data = [
     { name: "الرئيسية", link: "/" },
-    { name: "عرض المدارس", link: "/SchoolCard" },
+    { name: "عرض المدارس", link: "/SchoolFilter" },
     { name: "إضافة مدرسة", link: "/AddSchool" },
-
-    { name: "من نحن؟", link: "/AboutUs" }, // تعديل الرابط
+    { name: "من نحن؟", link: "/AboutUs" },
   ];
   return (
     <header className="relative ">
       <div
         className={`${
           showNavbar ? " fixed shadow-lg  border-b-2" : " "
-        } z-10 top-0 px-4 left-0 right-0 justify-between  shadow-lg flex lg:px-20 items-center  bg-customGreen2 hede`}
+        } z-10 top-0 px-4 left-0 right-0 justify-between  shadow-lg flex lg:px-20 items-center  bg-customGreen2 hede font-cairo text-lg`}
       >
         {/* Store logo */}
         <div className=" hidden lg:flex justify-center items-center">
@@ -55,7 +54,7 @@ function Navbar({ schools }) {
             alt={Logo}
             className="h-8 w-8 rounded-full shadow-lg"
           />
-          <h1 className="text-2xl px-4 font-bold text-white"> دليل تعليمك</h1>
+          <h1 className="text-2xl px-4 font-cairo font-bold text-white"> دليل تعليمك</h1>
         </div>
         {/* Desktop Navigation */}
         <div className="hidden lg:flex ">

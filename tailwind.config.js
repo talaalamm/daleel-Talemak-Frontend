@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
+    extend: { fontFamily: {
+      cairo: ["Cairo", "sans-serif"],
+      kufi: ["Noto Kufi Arabic", "sans-serif"],
+    },
+    
    
     },
     colors: {
