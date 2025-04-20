@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import location from "../../assets/download.jpeg";
+import location from "../../assets/download.png";
 
 import axios from "axios";
 import { Link } from "react-router-dom";
 import img from "../../assets/home.jpeg";
+import img2 from "../../assets/home2.jpeg";
+import img3 from "../../assets/home3.jpeg";
+
 import ListGovernorates from "../Listgovernorates";
 function ListSchool({ schools }) {
   const [ratings, setRatings] = useState({}); // تخزين التقييمات باستخدام ID المدرسة كمفتاح
@@ -17,7 +20,7 @@ function ListSchool({ schools }) {
         for (const school of schools) {
           try {
             const response = await axios.get(
-              `http://localhost:5027/api/StarRating/AverageRating/${school.schoolId}`
+              `http://localhost:5027/api/Rate/AverageRating/${school.schoolId}`
             );
             if (response.data && response.data.averageRating) {
               ratingsData[school.schoolId] = response.data.averageRating;
@@ -70,22 +73,22 @@ function ListSchool({ schools }) {
           <Link
             to={`/SchoolPage/${school.schoolId}`}
             key={school.schoolId}
-            className="relative max-w-sm bg-white h-96 border border-customGreen rounded-lg shadow-md overflow-hidden hover:scale-105 transition-all duration-300 transform"
+            className="relative max-w-sm bg-white h-96 border border-redd rounded-lg shadow-md overflow-hidden hover:scale-105 transition-all duration-300 transform"
           >
             <img
               className="w-full h-48 object-cover"
-              src={img}
+              src={img2}
               alt={school.schoolName}
             />
             <div className="p-4">
-              <h2 className="text-lg font-semibold  text-center mb-2 font-cairo">
+              <h2 className="text-lg font-semibold  text-center mb-2 font-cairo text-bluee">
                 {school.schoolName}
               </h2>
-              <p className="text-sm flex items-center justify-center  mb-4  font-bold">
+              <p className="text-sm  text-bluee flex items-center justify-center  mb-4  font-bold">
                 {school.governorateName}
               </p>
               <hr className="w-full h-1 bg-gray-200 mb-4 " />
-              <div className="text-center">
+              <div className="text-center text-bluee">
                 {school.region.governorateId.governorateName}
                 {school.region.regionName}
               </div>
@@ -95,7 +98,7 @@ function ListSchool({ schools }) {
                 {ratings[school.schoolId] !== undefined ? (
                   <div className="flex items-center">
                     {renderStars(ratings[school.schoolId])}
-                    <span className="ml-2 text-sm text-gray-600">
+                    <span className="ml-2 text-sm text-bluee">
                       ({ratings[school.schoolId]} نجوم)
                     </span>
                   </div>

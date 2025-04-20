@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Logo from "./images/logo.png";
+import Logo from "./images/logo2.jpeg";
 import { Link } from "react-router-dom";
 function Navbar() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -27,14 +27,14 @@ function Navbar() {
       <div
         className={`${
           showNavbar ? " fixed shadow-lg  border-b-2" : " "
-        } z-10 top-0 px-4 left-0 right-0 justify-between  shadow-lg flex lg:px-20 items-center  bg-customGreen2 hede font-cairo text-lg`}
+        } z-10 top-0 px-4 left-0 right-0 justify-between  shadow-lg flex lg:px-20 items-center  bg-bluee  hover:redd hede font-cairo text-lg`}
       >
         {/* Store logo */}
         <div className=" hidden lg:flex justify-center items-center">
           <img
             src={Logo}
             alt={Logo}
-            className="h-8 w-8 rounded-full shadow-lg"
+            className="h-20 w-20 rounded-full shadow-lg"
           />
           <h1 className="text-2xl px-4 font-bold text-white"> دليل تعليمك</h1>
         </div>
@@ -54,7 +54,7 @@ function Navbar() {
             alt={Logo}
             className="h-8 w-8 rounded-full shadow-lg"
           />
-          <h1 className="text-2xl px-4 font-cairo font-bold text-white"> دليل تعليمك</h1>
+          <h1 className="text-2xl px-4 font-cairo font-bold text-bluee"> دليل تعليمك</h1>
         </div>
         {/* Desktop Navigation */}
         <div className="hidden lg:flex ">
@@ -66,7 +66,7 @@ function Navbar() {
                     // إذا كان الرابط داخليًا، نستخدم handleScroll
                     <a
                       href={m.link}
-                      className="text-white mx-10 hover:bg-white  hover:text-blue-900 px-2"
+                      className="text-bluee mx-10 hover:bg-redd  hover:text-blue-900 px-2"
                       onClick={(e) => handleScroll(e, m.link.substring(1))}
                     >
                       {m.name}
@@ -74,7 +74,7 @@ function Navbar() {
                   ) : (
                     <Link
                       to={m.link}
-                      className="text-black  text-body flex items-center rounded-full border-customGreen2 hover:text-navbar px-4 hover:scale-110 hover:translate-x-3 mx-4 py-2 hover:bg-white transition-all duration-300 "
+                      className="text-bluee  text-body flex items-center rounded-full border-redd hover:text-navbar px-4 hover:scale-110 hover:translate-x-3 mx-4 py-2 hover:bg-white transition-all duration-300 "
                     >
                       {m.name}
                     </Link>
@@ -130,7 +130,7 @@ function Navbar() {
                 // إذا كان الرابط داخليًا، نستخدم handleScroll
                 <a
                   href={m.link}
-                  className="text-white mx-10 hover:bg-white rounded-lg hover:text-blue-900 px-2"
+                  className="text-bluee mx-10 hover:bg-white rounded-lg hover:text-blue-900 px-2"
                   onClick={(e) => handleScroll(e, m.link.substring(1))}
                 >
                   {m.name}

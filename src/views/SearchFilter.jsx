@@ -164,7 +164,7 @@ const SearchFilter = ({ onResults }) => {
         setSelectedGovernorate("");
         setSelectedArea("");
       }}
-      className="appearance-none border mt-10 border-customGreen2 bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-customGreen2 focus:border-customGreen2 font-cairo"
+      className="appearance-none border mt-10 border-bluee bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-redd focus:border-redd font-cairo"
       disabled={selectedGovernorate || selectedArea}
     />
   </div>
@@ -176,7 +176,7 @@ const SearchFilter = ({ onResults }) => {
         setSelectedGovernorate(e.target.value);
         setSearchTerm("");
       }}
-    className="appearance-none border mt-10 border-customGreen2 bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-customGreen2 focus:border-customGreen2 font-cairo"
+    className="appearance-none border mt-10 border-bluee bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-redd focus:border-redd font-cairo"
       disabled={searchTerm.trim() !== ""}
     >
        <option className="font-cairo" value="">اختر المحافظة</option>
@@ -198,7 +198,7 @@ const SearchFilter = ({ onResults }) => {
         setSearchTerm("");
       }}
       disabled={!selectedGovernorate || searchTerm.trim() !== ""}
-      className="appearance-none border mt-10 border-customGreen2 bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-customGreen2 focus:border-customGreen2 font-cairo"
+      className="appearance-none border mt-10 border-bluee bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-redd focus:border-redd font-cairo"
       >
       <option value="">اختر المنطقة</option>
       {areas.map((area) => (
@@ -212,7 +212,7 @@ const SearchFilter = ({ onResults }) => {
   <div className="w-full p-4">
     <button
       onClick={fetchFilteredSchools}
-      className="bg-customGreen2 mt-10 hover:bg-primaryButton text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all"
+      className="bg-bluee mt-10 hover:bg-redd text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all"
       disabled={loading}
     >
       <FaSearch className="inline-block mr-2" />

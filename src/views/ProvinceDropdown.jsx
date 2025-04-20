@@ -58,7 +58,7 @@ function ProvinceDropdown({ options, name, top, value, onSelect }) {
           {options.map((option) => (
             <li
               key={option.value} // تعيين قيمة المفتاح لكل عنصر في القائمة.
-              className="p-3 hover:bg-blue-500 hover:text-customGreen2 cursor-pointer"
+              className="p-3 hover:bg-blue-500 hover:text-bluee cursor-pointer"
               onClick={() => handleSelect(option.label)} // عند النقر على الخيار، يتم تحديده.
             >
               {option.label} {/* عرض اسم المنطقة. */}
