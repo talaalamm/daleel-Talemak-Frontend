@@ -6,9 +6,6 @@ import AboutUs from "./views/AboutUs.jsx";
 import AddSchool from "./views/school/AddSchools.jsx";
 import Filter from "./views/Filter.jsx";
 import SchoolFilter from "./views/school/SchoolFilter.jsx";
-import Login from "./component/Login.jsx"; 
-import ForgotPassword from "./component/ForgotPassword"; 
-import SignUp from "./component/SignUp.jsx"; 
 
 
 const router = createBrowserRouter([
@@ -24,18 +21,8 @@ const router = createBrowserRouter([
         path: "/Filter",
         element: <Filter />, // إعادة التوجيه إلى /Index
       },
-      {
-        path: "/login", // المسار لتسجيل الدخول
-        element: <Login />, // عرض صفحة تسجيل الدخول
-      },
-      {
-        path: "/forgot-password",  // المسار الجديد
-        element: <ForgotPassword />,  // عرض صفحة إعادة تعيين كلمة المرور
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
-      },
+     
+      
       {
         path: "/Index",
         element: <Index />, // الصفحة الرئيسية
