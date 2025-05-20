@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import write from "../../images/logo.png";
+import img2 from "../../assets/home2.jpeg";
 
 const AddSchools = () => {
   const [alert, setAlert] = useState({ message: "", type: "" });
@@ -72,10 +73,10 @@ const AddSchools = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(
-        "http://localhost:5027/api/Schools/CreateSchool",
-        formData
-      );
+    await axios.post(
+  "http://localhost:5027/api/Schools/CreateSchool",
+  { model: formData }
+);
       setAlert({ message: "تم إضافة المدرسة بنجاح!", type: "success" });
       setFormData({ schoolName: "", regionName: "", governorateName: "" });
 
@@ -99,8 +100,8 @@ const AddSchools = () => {
       {/* Instructions Section */}
       <div className="w-full max-w-md p-6 md:p-8">
         <div className="flex items-start mb-6">
-          <img src={write} className="w-12 h-12" alt="Add School Icon" />
-          <h1 className="text-4xl text-customGreen2  mr-3 font-cairo">
+          <img src={img2} className="w-12 h-12" alt="Add School Icon" />
+          <h1 className="text-4xl text-bluee mr-3 font-cairo">
             إضافة مدرسة جديدة
           </h1>
         </div>
@@ -112,7 +113,7 @@ const AddSchools = () => {
           </p>
 
           <div className="bg-white p-4 rounded-lg shadow-sm">
-            <h2 className="font-semibold text-lg mb-2 text-customGreen2">
+            <h2 className="font-semibold text-lg mb-2 text-bluee">
               إرشادات مهمة:
             </h2>
             <ul className="space-y-2 list-disc list-inside font-cairo">
@@ -124,7 +125,7 @@ const AddSchools = () => {
           </div>
 
           <div className="bg-blue-50 p-4 rounded-lg">
-            <h2 className="font-semibold text-lg mb-2 text-customGreen2 font-cairo">
+            <h2 className="font-semibold text-lg mb-2 text-bluee font-cairo">
               ملاحظات إضافية:
             </h2>
             <ul className="space-y-2 text-blue-600 font-cairo">
@@ -153,7 +154,7 @@ const AddSchools = () => {
           <div>
             <label
               htmlFor="schoolName"
-              className="block text-sm font-medium text-gray-700 font-cairo"
+              className="block text-sm font-medium text-bluee font-cairo"
             >
               اسم المدرسة
             </label>
@@ -165,14 +166,14 @@ const AddSchools = () => {
               onChange={handleChange}
               required
               placeholder="اسم المدرسة"
-              className="mt-1 block w-full p-2 outline-none border-2 border-body rounded-lg shadow-sm focus:ring-blue-500"
+              className="mt-1 block w-full p-2 outline-none border-2 border-body rounded-lg shadow-sm text-bluee focus:ring-blue-500"
             />
           </div>
 
           <div>
             <label
               htmlFor="governorateName"
-              className="block text-sm font-medium text-gray-700 font-cairo"
+              className="block text-sm font-medium text-bluee font-cairo"
             >
               المحافظة
             </label>
@@ -182,7 +183,7 @@ const AddSchools = () => {
               value={formData.governorateName}
               onChange={handleChange}
               required
-              className="mt-1 block w-full p-2 outline-none border-2 font-cairo border-body rounded-lg shadow-sm focus:ring-blue-500"
+              className="mt-1 block w-full p-2 outline-none border-2 font-cairo border-body rounded-lg shadow-sm focus:ring-blue-500 text-bluee"
             >
               <option value="">اختر المحافظة</option>
               {governorates.map((governorate) => (
@@ -196,7 +197,7 @@ const AddSchools = () => {
           <div>
             <label
               htmlFor="regionName"
-              className="block text-sm font-medium text-gray-700 font-cairo"
+              className="block text-sm font-medium text-bluee font-cairo"
             >
               المنطقة
             </label>
@@ -206,7 +207,7 @@ const AddSchools = () => {
               value={formData.regionName}
               onChange={handleChange}
               required
-              className="mt-1 block outline-none w-full py-2 px-2 border-2 font-cairo border-body rounded-lg shadow-sm focus:ring-blue-500"
+              className="mt-1 block outline-none w-full py-2 px-2 border-2 font-cairo border-body rounded-lg shadow-sm focus:ring-blue-500  text-bluee"
               disabled={loadingRegions || !selectedGovernorate}
             >
               <option value="">اختر المنطقة</option>
@@ -220,7 +221,7 @@ const AddSchools = () => {
 
           <button
             type="submit"
-            className="w-full bg-navbar text-white p-2 rounded-lg hover:bg-blue-700 transition font-cairo"
+            className="w-full bg-redd text-white p-2 rounded-lg hover:bg-blue-700 transition font-cairo"
           >
             أضف المدرسة
           </button>

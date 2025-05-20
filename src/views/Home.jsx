@@ -5,6 +5,8 @@ import test from "../images/2.jpg";
 import homes1 from "../images/homes1.jpg";
 import SearchFilterH from "./SearchFilterH";
 
+
+
 function Home() {
   const [currentImage, setCurrentImage] = useState(0);
   const [IN, setIN] = useState(false); // إضافة حالة لتفعيل التنقل
@@ -75,10 +77,10 @@ function Home() {
         <div className="flex flex-col lg:flex-row items-center justify-start min-h-[calc(100vh-200px)]">
           <div className="lg:w-1/2 text-right space-y-8 pr-8">
             <div className="space-y-6">
-              <h1 className="text-4xl md:text-6xl font-cairo font-extrabold text-customGreen2 leading-tight ">
+              <h1 className="text-4xl md:text-6xl font-cairo font-extrabold text-bluee leading-tight ">
                 عالم التعليم مليء بالفرص والتنوع
               </h1>
-              <p className="text-gray-700 text-lg md:text-2xl leading-relaxed font-cairo text-10xl ">
+              <p className="text-bluee text-lg md:text-2xl leading-relaxed font-cairo text-10xl ">
                 ابدأ رحلتك التعليمية بثقة مع دليل شامل للمدارس الخاصة في الأردن
                 نساعدك في اتخاذ القرار الأفضل لمستقبل أبنائك التعليمي
               </p>
@@ -88,7 +90,7 @@ function Home() {
               <Link
                 to="/SchoolFilter"
                 
-                className="bg-yellow-400 bg-customGreen2 hover:bg-primaryButton text-white font-cairo font-bold py-3 px-6 rounded-lg shadow-lg transition-all ml-60"
+                className="bg-yellow-400 bg-redd hover:bg-bluee text-white font-cairo font-bold py-3 px-6 rounded-lg shadow-lg transition-all ml-60"
               >
                 ابدأ رحلتك التعليمية
               </Link>
@@ -96,7 +98,7 @@ function Home() {
           </div>
         </div>
 
-        <div className="fixed bottom-0 left-0 right-0 bg-customGreen2 z-20">
+        <div className="fixed bottom-0 left-0 right-0 bg-bluee z-20">
           <div className="container m-auto font-cairo ">
             <SearchFilterH
               onResults={handleResults}

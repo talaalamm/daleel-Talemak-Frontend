@@ -161,7 +161,7 @@ const SearchFilterH = ({ onResults }) => {
             setSelectedGovernorate("");
             setSelectedArea("");
           }}
-          className="appearance-none border mt-2 border-customGreen2 bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-customGreen2 focus:border-customGreen2 font-cairo"
+          className="appearance-none border mt-2 border-yelloww bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-customGreen2 focus:border-customGreen2 font-cairo"
           disabled={selectedGovernorate || selectedArea}
         />
       </div>
@@ -193,7 +193,7 @@ const SearchFilterH = ({ onResults }) => {
             setSearchTerm("");
           }}
           disabled={!selectedGovernorate || searchTerm.trim() !== ""}
-          className="appearance-none border mt-2 border-customGreen2 bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-customGreen2 focus:border-customGreen2 font-cairo"
+          className="appearance-none border mt-2 border-bluee bg-white text-gray-700 p-3 pr-10 rounded-full w-full outline-none shadow-sm hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-customGreen2 focus:border-customGreen2 font-cairo"
         >
           <option value="">اختر المنطقة</option>
           {areas.map((area) => (
@@ -207,10 +207,10 @@ const SearchFilterH = ({ onResults }) => {
       <div className="w-full flex items-center  ">
         <button
           onClick={fetchFilteredSchools}
-          className="bg-customGreen2 hover:bg-primaryButton text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all"
+          className="bg-white hover:bg-redd text-white font-bold py-2 px-6 rounded-full shadow-lg transition-all"
           disabled={loading}
         >
-                <FaSearch className="inline-block mr-2" />
+                <FaSearch className="inline-block mr-2 text-bluee" />
           
           {loading ? "جاري البحث..." : ""}
         </button>

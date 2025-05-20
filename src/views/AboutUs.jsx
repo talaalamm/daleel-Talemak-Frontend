@@ -4,11 +4,11 @@ const AboutUs = () => {
   return (
     <div className="bg-yellow-100 p-10 mt-14" id="about" font-cairo>
       {/* صفحة من نحن */}
-      <h1 className="text-center text-primaryButton text-4xl  mb-8 font-cairo">عن دليل تعليمك</h1>
+      <h1 className="text-center text-redd text-4xl  mb-8 font-cairo">عن دليل تعليمك</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 ">
         {/* الرؤية */}
-        <div className=" border-pinkb p-6 rounded-lg shadow-md  border-2 border-body text-navbar outline-none  rounded-lg shadow-md transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
-          <h2 className="text-xl  text-customGreen2  mb-4 bg-white text-center py-2 font-cairo">
+        <div className=" border-redd p-6 rounded-lg shadow-md  border-2 border-body text-navbar outline-none  rounded-lg shadow-md transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
+          <h2 className="text-xl  text-bluee  mb-4 bg-white text-center py-2 font-cairo">
             الرؤية
           </h2>
           <p>
@@ -16,8 +16,8 @@ const AboutUs = () => {
           </p>
         </div>
         {/* الرسالة */}
-        <div className=" border-pinkb p-6 rounded-lg shadow-md  border-2 border-body text-navbar outline-none  rounded-lg shadow-md transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
-          <h2 className="text-xl text-customGreen2  text-blue-900  mb-4 bg-white text-center py-2 font-cairo ">
+        <div className=" border-redd p-6 rounded-lg shadow-md  border-2 border-body text-navbar outline-none  rounded-lg shadow-md transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
+          <h2 className="text-xl text-bluee  text-blue-900  mb-4 bg-white text-center py-2 font-cairo ">
             رسالتنا
           </h2>
 
@@ -28,8 +28,8 @@ const AboutUs = () => {
           </p>
         </div>
         {/* القيمة */}
-        <div className=" border-pinkb p-6 rounded-lg shadow-md  border-2 border-body text-navbar outline-none  rounded-lg shadow-md transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
-          <h2 className="text-xl text-customGreen2 text-blue-900  mb-4 bg-white text-center py-2 font-cairo">
+        <div className=" border-redd p-6 rounded-lg shadow-md  border-2 border-body text-navbar outline-none  rounded-lg shadow-md transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
+          <h2 className="text-xl text-bluee text-blue-900  mb-4 bg-white text-center py-2 font-cairo">
             قيمنا
           </h2>
 
@@ -40,8 +40,8 @@ const AboutUs = () => {
       </div>
       {/* الشعار */}
       <div className="grid grid-cols-2 ">
-        <div className="mt-10 border-pinkb   p-6 rounded-lg   border-2 border-body text-navbar outline-none  rounded-lg shadow-md transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
-          <h2 className="text-xl   text-customGreen2  text-blue-900 mb-4 bg-white text-center py-2 font-cairo ">
+        <div className="mt-10 border-redd   p-6 rounded-lg   border-2 border-body text-navbar outline-none  rounded-lg shadow-md transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
+          <h2 className="text-xl   text-bluee text-blue-900 mb-4 bg-white text-center py-2 font-cairo ">
             شعارنا
           </h2>
 
@@ -64,8 +64,8 @@ const AboutUs = () => {
         </div>
       </div>
       {/* نصائح */}
-      <div className="mt-10 p-6 border-customGreen2 rounded-lg shadow-md  border-2 border-body text-navbar outline-none   transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
-        <h2 className="text-xl  text-customGreen2  mb-4 bg-white text-center py-2">
+      <div className="mt-10 p-6 border-redd rounded-lg shadow-md  border-2 border-body text-navbar outline-none   transition-transform duration-300 hover:scale-105 focus:ring-blue-500 font-cairo">
+        <h2 className="text-xl  text-bluee  mb-4 bg-white text-center py-2">
           {" "}
           نصائح دليل تعليمات لاختيار المدرسة الأنسب لأبنائك
         </h2>

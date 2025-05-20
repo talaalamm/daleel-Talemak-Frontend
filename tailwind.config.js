@@ -17,7 +17,7 @@ export default {
       text: '#333', // لون النصوص العادية
       heading: '#d9534f', // لون العناوين (أحمر غامق)
       white: '#fff', // اللون الأبيض
-      yellow:'#FAEE5A',
+     gray:'#DBDBDB',
       purple:'#D76C82',
       // ألوان الأزرار
       primaryButton: '#d81b60', // لون زر رئيسي (وردي فاقع)
@@ -44,7 +44,13 @@ export default {
       peach:'#FF6F61',
       navy1:'#1F509A',
      navy3:'#003161',
-     pinkb:'#FFCCE1'
+     pinkb:'#FFCCE1',
+     bluee:'#03346E',
+     redd:'#A31D1D',
+     yelloww:'#F5F7B2',
+     yelloww2:'#FFFDE1',
+     yellow:'#F5C45E'
+
     },
 
 
